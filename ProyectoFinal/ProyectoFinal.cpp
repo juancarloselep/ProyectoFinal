@@ -320,7 +320,7 @@ void animate(void)
 	/*ANIMACION PISTOLA*/
 	if (animacion)
 	{
-		Vector3D vectorA = { 0.0, 0.0, -1.0 };
+		Vector3D vectorA = { 0.0f, 0.0f, -1.0f};
 		Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z};
 
 
@@ -773,9 +773,8 @@ int main() {
 		staticShader.setMat4("model", modelOp);
 		casaPina.Draw(staticShader);*/
 		
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z));
-		modelOp = glm::rotate(modelOp, glm::radians(anguloPistola), glm::vec3(0.0f, 1.0f, 0.0f));
-		//modelOp = glm::scale(modelOp, glm::vec3(1.0f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(camera.Position.x, camera.Position.y - 0.5f, camera.Position.z - 2.0f));
+		modelOp = glm::rotate(modelOp, glm::radians(anguloPistola), glm::vec3(1.0f, 1.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		revolver.Draw(staticShader);
 		// -------------------------------------------------------------------------------------------------------------------------
