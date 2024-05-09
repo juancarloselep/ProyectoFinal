@@ -28,6 +28,29 @@
 #include <Skybox.h>
 #include <iostream>
 #include <mmsystem.h>
+#include <math.h>
+#include <iostream>
+#include <cmath>
+
+struct Vector3D {
+	double x, y, z;
+};
+
+double dotProduct(const Vector3D& a, const Vector3D& b) {
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+double magnitude(const Vector3D& v) {
+	return std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+double angleBetweenVectors(const Vector3D& a, const Vector3D& b) {
+	double dot = dotProduct(a, b);
+	double magA = magnitude(a);
+	double magB = magnitude(b);
+	return std::acos(dot / (magA * magB));
+}
+
 
 
 
@@ -107,7 +130,11 @@ recorrido1 = true,
 recorrido2 = false,
 recorrido3 = false,
 recorrido4 = false;
-
+/*VARIABLES PISTOLA*/
+glm::vec3 posicionInicial = glm::vec3(0.0f, 0.0f, -1.0f);
+float	magnitud1 = 0.0f,
+		anguloPistola = 0.0f,
+		magnitud2 = 0.0f;
 /*VARIABLES PARA VENTANA*/
 
 
@@ -115,6 +142,8 @@ float	incRot = 0.0f,
 		rotV1 = 0.0f;
 glm::vec3 posVentana1(0.0f, -1.9f, 0.0f);
 glm::vec3 RotVentana1(0.0f, -1.9f, 0.0f);
+
+
 /*************************************************************/
 //Keyframes (Manipulación y dibujo)
 float	posX = 0.0f,
@@ -234,6 +263,7 @@ void LoadTextures()
 
 
 
+
 void animate(void) 
 {
 	posMiLuz.x = 150.0f * cos(myVariable);
@@ -287,10 +317,17 @@ void animate(void)
 		}
 	}
 
-	//Vehículo
+	/*ANIMACION PISTOLA*/
 	if (animacion)
 	{
-		movAuto_x += 3.0f;
+		Vector3D vectorA = { 0.0, 0.0, -1.0 };
+		Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z};
+
+
+		double angleRadians = angleBetweenVectors(vectorA, vectorB);
+		anguloPistola = angleRadians * 180.0 / 3.1416;
+		 
+
 	}
 }
 
@@ -737,8 +774,9 @@ int main() {
 		casaPina.Draw(staticShader);*/
 		
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(camera.Position.x, camera.Position.y, camera.Position.z));
+		modelOp = glm::rotate(modelOp, glm::radians(anguloPistola), glm::vec3(0.0f, 1.0f, 0.0f));
+		//modelOp = glm::scale(modelOp, glm::vec3(1.0f));
 		staticShader.setMat4("model", modelOp);
-		staticShader.setVec3("spotLight[0].direction", camera.Front);
 		revolver.Draw(staticShader);
 		// -------------------------------------------------------------------------------------------------------------------------
 		// ESCENARIO CENTRO COMERCIAL
