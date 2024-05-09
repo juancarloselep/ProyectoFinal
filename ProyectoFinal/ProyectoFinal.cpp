@@ -545,6 +545,7 @@ int main() {
 	Model Sombrero("resources/objects/Sombrero/sombrero.obj");
 	Model Ballesta("resources/objects/Ballesta/ballesta.obj");
 	Model Bate("resources/objects/Bate/bate.obj");
+	Model ZonaComida1("resources/objects/ZonaComida1/zonaComida1.obj");
 	Model Ventana1("resources/objects/Ventana/ventana1.obj");
 	Model Ventana2("resources/objects/Ventana/ventana2.obj");
 	Model Ventana3("resources/objects/Ventana/ventana3.obj");
@@ -944,6 +945,10 @@ int main() {
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		Bate.Draw(staticShader);
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		staticShader.setMat4("model", modelOp);
+		ZonaComida1.Draw(staticShader);
+
 		/************VENTANA****************/
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posVentana1.x, posVentana1.y, posVentana1.z));
 		modelOp = glm::rotate(modelOp, glm::radians(rotV1), glm::vec3(0.0f, 0.0f, 1.0f));
