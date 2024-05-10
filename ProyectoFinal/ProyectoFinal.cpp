@@ -32,6 +32,8 @@
 #include <iostream>
 #include <cmath>
 
+
+/*
 struct Vector3D {
 	double x, y, z;
 };
@@ -50,9 +52,29 @@ double angleBetweenVectors(const Vector3D& a, const Vector3D& b) {
 	double magB = magnitude(b);
 	return std::acos(dot / (magA * magB));
 }
+*/
 
 
+struct Vector3D {
+	double x, y, z;
+};
 
+double dotProduct(const Vector3D& a, const Vector3D& b) {
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+double magnitude(const Vector3D& v) {
+	return std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+double angleBetweenVectors(const Vector3D& a, const Vector3D& b) {
+	double dot = dotProduct(a, b);
+	double magA = magnitude(a);
+	double magB = magnitude(b);
+	//double angleRadians;
+	//double angleRadians = std::acos(dot / (magA * magB));
+	return std::atan2(magB * std::acos(dot / (magA * magB)), magA * std::cos(std::acos(dot / (magA * magB))));
+}
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
@@ -141,7 +163,7 @@ float	magnitud1 = 0.0f,
 int estadoVentana = 0;
 float	incRot = 0.0f,
 		rotV1 = 0.0f;
-glm::vec3 posV1(0.0f, -1.9f, 0.0f);
+glm::vec3 posV1(92.467f, 1.773f - 1.9f, -45.01f);
 glm::vec3 RotVentana1(0.0f, -1.9f, 0.0f);
 
 
@@ -318,14 +340,20 @@ void animate(void)
 		}
 	}
 	/*CALCULO ANGULO PISTOLA*/
-	Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
+	/*Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
 	Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z };
 
 
 	double angleRadians = angleBetweenVectors(vectorA, vectorB);
 	anguloPistola = angleRadians * 180.0 / 3.1416;
-	std::cout << "angulo = " << anguloPistola << std::endl;
+	std::cout << "angulo = " << anguloPistola << std::endl;*/
 	
+	Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
+	Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z };
+
+	double angleRadians = angleBetweenVectors(vectorA, vectorB);
+	anguloPistola = angleRadians * 180.0 / 3.1416;
+
 	/*ANIMACION VENTANA*/
 	if (animacionVentana)
 	{	
@@ -1000,7 +1028,7 @@ int main() {
 		staticShader.setMat4("model", modelOp);
 		ZonaComida1.Draw(staticShader);
 
-		/************VENTANA****************/
+		/******************************VENTANA**************************************/
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV1.x, posV1.y, posV1.z));
 		modelOp = glm::rotate(modelOp, glm::radians(rotV1), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
