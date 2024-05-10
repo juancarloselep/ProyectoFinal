@@ -359,11 +359,11 @@ void animate(void)
 	{	
 		if (estadoVentana == 0)
 		{
-			posV1.y -= 0.0f;
-			rotV1 -= 15.5f;
+			posV1.y -= 0.1f;
+			rotV1 += 5.0f;
 			std::cout << "pos = " << posV1.y << std::endl;
 			std::cout << "giro = " << rotV1 << std::endl;
-			if (posV1.y <= 0.0f && rotV1 <= -90.0f)
+			if (posV1.y <= -1.9f && rotV1 >= 90.0f)
 				estadoVentana = 1;	
 		}
 		//if (estadoVentana == 1)
