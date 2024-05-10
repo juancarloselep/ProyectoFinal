@@ -1,7 +1,7 @@
 /*---------------------------------------------------------*/
 /* ----------------   Proyecto Final --------------------------*/
 /*-----------------    2024-2   ---------------------------*/
-/*------------- Alumnos: Juan Carlos L·zaro PÈrez   --------*/
+/*------------- Alumnos: Juan Carlos L√°zaro P√©rez   --------*/
 /*--------------------- Jennifer Rodriguez Vargas----------*/
 /*------------- No. Cuenta: 314093587  ---------------------*/
 /*-----------				316164190 ---------------------*/
@@ -90,7 +90,7 @@ GLFWmonitor* monitors;
 GLuint VBO[3], VAO[3], EBO[3];
 
 //Camera
-Camera camera(glm::vec3(0.0f, 10.0f, 30.0f)); //POSICION INICIAL DE LA C¡MARA
+Camera camera(glm::vec3(0.0f, 10.0f, 30.0f)); //POSICION INICIAL DE LA C√ÅMARA
 float MovementSpeed = 0.1f;
 GLfloat lastX = SCR_WIDTH / 2.0f,
 		lastY = SCR_HEIGHT / 2.0f;
@@ -106,8 +106,8 @@ lastFrame = 0.0f;
 
 void getResolution(void);
 void myData(void);							// De la practica 4
-void LoadTextures(void);					// De la pr·ctica 6
-unsigned int generateTextures(char*, bool, bool);	// De la pr·ctica 6
+void LoadTextures(void);					// De la pr√°ctica 6
+unsigned int generateTextures(char*, bool, bool);	// De la pr√°ctica 6
 
 //For Keyboard
 float	movX = 0.0f,
@@ -136,7 +136,7 @@ float	myVariable = 0.0f,
 		color = 0.0f;
 
 glm::vec3 lightPosition(0.0f, 4.0f, -10.0f);
-glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);//DirecciÛn de luz de arriba hacia abajo
+glm::vec3 lightDirection(0.0f, -1.0f, -1.0f);//Direcci√≥n de luz de arriba hacia abajo
 
 //// Light
 glm::vec3 lightColor = glm::vec3(0.7f);
@@ -168,7 +168,7 @@ glm::vec3 RotVentana1(0.0f, -1.9f, 0.0f);
 
 
 /*************************************************************/
-//Keyframes (ManipulaciÛn y dibujo)
+//Keyframes (Manipulaci√≥n y dibujo)
 float	posX = 0.0f,
 		posY = 0.0f,
 		posZ = 0.0f,
@@ -197,7 +197,7 @@ typedef struct _frame
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 0;			//introducir n˙mero en caso de tener Key guardados
+int FrameIndex = 0;			//introducir n√∫mero en caso de tener Key guardados
 bool play = false;
 int playIndex = 0;
 
@@ -570,7 +570,7 @@ int main() {
 	// -----------
 	Model piso("resources/objects/piso/piso.obj");
 	
-	/********************MODELOS EST¡TICOS************************************/
+	/********************MODELOS EST√ÅTICOS************************************/
 	Model revolver("resources/objects/Revolver/revolver.obj");
 	Model contornoCC("resources/objects/ContornoCC/contornoCC.obj");
 	Model RellenoTecho("resources/objects/RellenoTecho/rellenoTecho.obj");
@@ -637,7 +637,7 @@ int main() {
 	ModelAnim zombieArrastre("resources/objects/ZombieArrastre/ZombieArrastre.dae");
 	zombieArrastre.initShaders(animShader.ID);
 
-	//InicializaciÛn de KeyFrames
+	//Inicializaci√≥n de KeyFrames
 	for (int i = 0; i < MAX_FRAMES; i++)
 	{
 		KeyFrame[i].posX = 0;
@@ -776,7 +776,7 @@ int main() {
 
 		//Tener Piso como referencia
 		glBindVertexArray(VAO[2]);
-		//Colocar cÛdigo aquÌ
+		//Colocar c√≥digo aqu√≠
 		modelOp = glm::scale(glm::mat4(1.0f), glm::vec3(40.0f, 2.0f, 40.0f));
 		modelOp = glm::translate(modelOp, glm::vec3(0.0f, -1.0f, 0.0f));
 		modelOp = glm::rotate(modelOp, glm::radians(-90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -786,7 +786,7 @@ int main() {
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glBindVertexArray(VAO[0]);
-		//Colocar cÛdigo aquÌ
+		//Colocar c√≥digo aqu√≠
 		
 
 		/***   Segundo objeto  **/
@@ -799,7 +799,7 @@ int main() {
 		// -------------------------------------------------------------------------------------------------------------------------
 
 		// -------------------------------------------------------------------------------------------------------------------------
-		// Escenario Est·tico
+		// Escenario Est√°tico
 		// -------------------------------------------------------------------------------------------------------------------------
 		staticShader.use();
 		staticShader.setMat4("projection", projectionOp);
@@ -818,6 +818,13 @@ int main() {
 		modelOp = glm::rotate(modelOp, glm::radians(anguloPistola), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		revolver.Draw(staticShader);
+
+		// -------------------------------------------------------------------------------------------------------------------------
+		// ANIMACION AUTO 
+		// -------------------------------------------------------------------------------------------------------------------------
+		
+		//Trabajndo en la animacion 
+		
 		// -------------------------------------------------------------------------------------------------------------------------
 		// ESCENARIO CENTRO COMERCIAL
 		// -------------------------------------------------------------------------------------------------------------------------
