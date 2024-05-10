@@ -66,14 +66,22 @@ double dotProduct(const Vector3D& a, const Vector3D& b) {
 double magnitude(const Vector3D& v) {
 	return std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
+/*
+Vector3D productoCruz(const Vector3D& a, const Vector3D& b) {
+	return Vector3D (a.y * b.z - a.z * b.y,
+					a.z * b.x - a.x * b.z,
+					a.x * b.y - a.y * b.x);
+}
+*/
+
 
 double angleBetweenVectors(const Vector3D& a, const Vector3D& b) {
 	double dot = dotProduct(a, b);
 	double magA = magnitude(a);
 	double magB = magnitude(b);
-	//double angleRadians;
-	//double angleRadians = std::acos(dot / (magA * magB));
-	return std::atan2(magB * std::acos(dot / (magA * magB)), magA * std::cos(std::acos(dot / (magA * magB))));
+	double angleRadians;
+	return angleRadians = std::acos(dot / (magA * magB));
+	//return std::atan2(magB * std::acos(dot / (magA * magB)), magA * std::cos(std::acos(dot / (magA * magB))));
 }
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
@@ -158,12 +166,23 @@ glm::vec3 posicionInicial = glm::vec3(0.0f, 0.0f, -1.0f);
 float	magnitud1 = 0.0f,
 		anguloPistola = 0.0f,
 		magnitud2 = 0.0f;
-/*VARIABLES PARA VENTANA*/
+/*************VARIABLES PARA VENTANA*****************/
 
 int estadoVentana = 0;
 float	incRot = 0.0f,
+		rotV6 = 0.0f,
+		rotV5 = 0.0f,
+		rotV4 = 0.0f,
+		rotV3 = 0.0f,
+		rotV2 = 0.0f,
 		rotV1 = 0.0f;
 glm::vec3 posV1(92.467f, 1.773f - 1.9f, -45.01f);
+glm::vec3 posV2(92.467f, 1.796f - 1.9f, -48.1f);
+glm::vec3 posV3(92.467f, 6.0f - 1.9f, -52.5f);
+glm::vec3 posV4(92.467f, 1.796f - 1.9f, -54.0f);
+glm::vec3 posV5(92.467f, 1.796f - 1.9f, -60.0f);
+glm::vec3 posV6(92.467f, 1.796f - 1.9f, -64.989f);
+
 glm::vec3 RotVentana1(0.0f, -1.9f, 0.0f);
 
 
@@ -289,24 +308,6 @@ void LoadTextures()
 
 void animate(void) 
 {
-	posMiLuz.x = 150.0f * cos(myVariable);
-	posMiLuz.z = 100.0f * sin(myVariable);
-	myVariable += 0.1f;
-	color += 0.1f;
-
-	if (color >= 0.0f && color < 5.0f)
-		miColor = glm::vec3 (1.0f, 0.0f, 0.0f);
-	if (color >= 5.0f && color < 10.0f)
-		miColor = glm::vec3(1.0f, 1.0f, 1.0f);
-	if (color >= 10.0f && color < 15.0f)
-		miColor = glm::vec3(0.0f, 1.0f, 0.0f);
-	if (color >= 15.0f && color < 20.0f)
-		miColor = glm::vec3(0.0f, 0.0f, 1.0f);
-	if (color >= 20.0f && color < 25.0f)
-		miColor = glm::vec3(1.0f, 1.0f, 0.0f);
-	if (color >= 25.0f)
-		color = 0.0f;
-
 	if (play)
 	{
 		if (i_curr_steps >= i_max_steps) //end of animation between frames?
@@ -339,6 +340,8 @@ void animate(void)
 			i_curr_steps++;
 		}
 	}
+	/******************ANIMACION REVOLVER*********************/
+
 	/*CALCULO ANGULO PISTOLA*/
 	/*Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
 	Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z };
@@ -350,11 +353,22 @@ void animate(void)
 	
 	Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
 	Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z };
+	Vector3D vectorC = {vectorA.y * vectorB.z - vectorA.z * vectorB.y,
+						vectorA.z * vectorA.x - vectorA.x * vectorB.z,
+						vectorA.x * vectorB.y - vectorA.y * vectorB.x };
 
-	double angleRadians = angleBetweenVectors(vectorA, vectorB);
-	anguloPistola = angleRadians * 180.0 / 3.1416;
 
-	/*ANIMACION VENTANA*/
+	
+	double anguloAux = angleBetweenVectors(vectorA, vectorB);
+	//anguloPistola = angleRadians * 180.0 / 3.1416;
+	//float anguloAux = angleRadians * 180.0 / 3.1416;
+
+	double anguloAux2 = std::atan2(magnitude (vectorA) * magnitude (vectorB) * std::sin(anguloAux), dotProduct (vectorA, vectorB));
+	std::cout << "angulo = " << anguloPistola << std::endl;
+	
+	anguloPistola = anguloAux2 * 180.0 / 3.1416;
+
+	/******************ANIMACION VENTANA********************/
 	if (animacionVentana)
 	{	
 		if (estadoVentana == 0)
@@ -364,9 +378,13 @@ void animate(void)
 			std::cout << "pos = " << posV1.y << std::endl;
 			std::cout << "giro = " << rotV1 << std::endl;
 			if (posV1.y <= -1.9f && rotV1 >= 90.0f)
-				estadoVentana = 1;	
+				//animacionVentana = false;//estadoVentana = 1;	
+				estadoVentana = 1;
 		}
-		//if (estadoVentana == 1)
+		if (estadoVentana == 1)
+		{
+				
+		}
 
 	}
 
@@ -1041,23 +1059,23 @@ int main() {
 		staticShader.setMat4("model", modelOp);
 		Ventana1.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV2.x, posV2.y, posV2.z));
 		staticShader.setMat4("model", modelOp);
 		Ventana2.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV3.x, posV3.y, posV3.z));
 		staticShader.setMat4("model", modelOp);
 		Ventana3.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV4.x, posV4.y, posV4.z));
 		staticShader.setMat4("model", modelOp);
 		Ventana4.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV5.x, posV5.y, posV5.z));
 		staticShader.setMat4("model", modelOp);
 		Ventana5.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV6.x, posV6.y, posV6.z));
 		staticShader.setMat4("model", modelOp);
 		Ventana6.Draw(staticShader);
 		//-------------------------------------------------------------------------------------
@@ -1141,11 +1159,15 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	/*******************ANIMACION VENTANA*****************************/
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
 		animacionVentana ^= true;
+	/*************RESET VENTANA*********************/
+	
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
-		posV1.x = 0.0f;
-		posV1.y = -1.9f;
-		posV1.z = 0.0f;
+		/*************V1****************/
+		posV1.x = 92.467f;
+		posV1.y = 1.773f - 1.9f;
+		posV1.z = -45.01f;
+		rotV1 = 0.0f;
 		animacionVentana = false;
 	}
 
