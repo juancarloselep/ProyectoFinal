@@ -126,6 +126,7 @@ float	movAuto_x = 0.0f,
 movAuto_z = 0.0f,
 orienta = 90.0f;
 bool	animacion = false,
+		animacionVentana = false,
 recorrido1 = true,
 recorrido2 = false,
 recorrido3 = false,
@@ -137,10 +138,10 @@ float	magnitud1 = 0.0f,
 		magnitud2 = 0.0f;
 /*VARIABLES PARA VENTANA*/
 
-
+int estadoVentana = 0;
 float	incRot = 0.0f,
 		rotV1 = 0.0f;
-glm::vec3 posVentana1(0.0f, -1.9f, 0.0f);
+glm::vec3 posV1(0.0f, -1.9f, 0.0f);
 glm::vec3 RotVentana1(0.0f, -1.9f, 0.0f);
 
 
@@ -316,19 +317,31 @@ void animate(void)
 			i_curr_steps++;
 		}
 	}
-
-	/*ANIMACION PISTOLA*/
-	if (animacion)
-	{
-		Vector3D vectorA = { 0.0f, 0.0f, -1.0f};
-		Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z};
+	/*CALCULO ANGULO PISTOLA*/
+	Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
+	Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z };
 
 
-		double angleRadians = angleBetweenVectors(vectorA, vectorB);
-		anguloPistola = angleRadians * 180.0 / 3.1416;
-		 
+	double angleRadians = angleBetweenVectors(vectorA, vectorB);
+	anguloPistola = angleRadians * 180.0 / 3.1416;
+	std::cout << "angulo = " << anguloPistola << std::endl;
+	
+	/*ANIMACION VENTANA*/
+	if (animacionVentana)
+	{	
+		if (estadoVentana == 0)
+		{
+			posV1.y -= 0.0f;
+			rotV1 -= 15.5f;
+			std::cout << "pos = " << posV1.y << std::endl;
+			std::cout << "giro = " << rotV1 << std::endl;
+			if (posV1.y <= 0.0f && rotV1 <= -90.0f)
+				estadoVentana = 1;	
+		}
+		//if (estadoVentana == 1)
 
 	}
+
 }
 
 void getResolution() {
@@ -774,7 +787,7 @@ int main() {
 		casaPina.Draw(staticShader);*/
 		
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(camera.Position.x, camera.Position.y - 0.5f, camera.Position.z - 2.0f));
-		modelOp = glm::rotate(modelOp, glm::radians(anguloPistola), glm::vec3(1.0f, 1.0f, 1.0f));
+		modelOp = glm::rotate(modelOp, glm::radians(anguloPistola), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		revolver.Draw(staticShader);
 		// -------------------------------------------------------------------------------------------------------------------------
@@ -988,7 +1001,7 @@ int main() {
 		ZonaComida1.Draw(staticShader);
 
 		/************VENTANA****************/
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posVentana1.x, posVentana1.y, posVentana1.z));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV1.x, posV1.y, posV1.z));
 		modelOp = glm::rotate(modelOp, glm::radians(rotV1), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana1.Draw(staticShader);
@@ -1088,21 +1101,22 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_4) == GLFW_PRESS)
 		rotCuboY += 8.0f;
 	//Car animation
-	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
-		animacion ^= true;
-	/*******************ANIMACION VENTANA*****************************/
-	if (glfwGetKey(window, GLFW_KEY_5) == GLFW_PRESS)
-		posVentana1.z += 8.0f;
-	if (glfwGetKey(window, GLFW_KEY_6) == GLFW_PRESS)
-		posVentana1.z-= 8.0f;
-	/*
-	if (key == GLFW_KEY_8 && action == GLFW_PRESS)
-		{
-			incRot += 1.2f;
-			if (rotV1 >= 0.0f && rotV1 <= 90.0f)
+	
 
-		}
-	*/
+	/*******************ANIMACION VENTANA*****************************/
+	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+		animacionVentana ^= true;
+	if (key == GLFW_KEY_R && action == GLFW_PRESS)
+	{
+		posV1.x = 0.0f;
+		posV1.y = -1.9f;
+		posV1.z = 0.0f;
+		animacionVentana = false;
+	}
+
+	
+	
+	
 
 	/******************************************************************/
 	//To play KeyFrame animation 
