@@ -133,6 +133,7 @@ orienta = 90.0f,
 orienta_llanta = 0.0f;
 bool	animacionVentana = false,
 		animacionV3 = false,
+		animacionAuto = false,
 		animacion = false;
 /*VARIABLES PISTOLA*/
 glm::vec3 posicionInicial = glm::vec3(0.0f, 0.0f, -1.0f);
@@ -395,8 +396,13 @@ void animate(void)
 			animacionV3 = false;
 		
 	}
-	// ******** ANIMACION AUTO **************
-	if (estado_carro == 0)
+	/******** ANIMACION AUTO *************/
+
+	if (animacionAuto)
+	{
+
+	}
+	/*if (estado_carro == 0)
 	{
 		movAuto_z += 0.5f;
 		orienta = 180.0f;
@@ -443,7 +449,7 @@ void animate(void)
 			orienta_llanta = 45.0f;
 			animacion = false;
 		}
-	}
+	}*/
 	/*if (estado_carro == 5)
 	{
 		movAuto_x -= 0.1f;
@@ -925,21 +931,22 @@ int main() {
 		// -------------------------------------------------------------------------------------------------------------------------
 		
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-20.42f, -1.9f, 82.598f));
-		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
+		tmp = modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-20.42f, -1.9f, 82.598f));
+		
 		staticShader.setMat4("model", modelOp);
 		Chasis.Draw(staticShader);
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-17.6f, 3.3f - 1.9f, 80.2f));
+
+		modelOp = glm::translate(tmp, glm::vec3(2.82f, 3.3f, -2.398f));
 		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		puertader.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-23.1f, 3.3f - 1.9f, 80.2f));
+		modelOp = glm::translate(tmp, glm::vec3(-2.68f, 3.3f, -2.398f));
 		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		puertaizq.Draw(staticShader);
 
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-20.4f, 3.6f - 1.9f, 79.6f));
+		modelOp = glm::translate(tmp, glm::vec3(0.02f, 3.6f, -2.998f));
 		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		cofre.Draw(staticShader);
@@ -1366,9 +1373,52 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		animacionVentana = false;
 		animacionV3 = false;
 	}
+	/*******************ANIMACION AUTO*****************************/
+	if (key == GLFW_KEY_K && action == GLFW_PRESS)
+	{
+		animacionAuto ^= true;	
+	}
+	
 
-	
-	
+	/*************RESET VENTANA*********************/
+
+	if (key == GLFW_KEY_L && action == GLFW_PRESS)
+	{
+		/*************V1****************/
+		posV1.x = 92.467f;
+		posV1.y = 1.773f - 1.9f;
+		posV1.z = -45.01f;
+		rotV1 = 0.0f;
+		/*************V2****************/
+		posV2.x = 92.467f;
+		posV2.y = 1.796f - 1.9f;
+		posV2.z = -48.1f;
+		rotV2 = 0.0f;
+		/*************V3****************/
+		posV3.x = 92.467f;
+		posV3.y = 8.257f - 1.9f;
+		posV3.z = -60.0f;
+		rotV3 = 0.0f;
+		/*************V4****************/
+		posV4.x = 92.467f;
+		posV4.y = 1.796f - 1.9f;
+		posV4.z = -54.0f;
+		rotV4 = 0.0f;
+		/*************V5****************/
+		posV5.x = 92.467f;
+		posV5.y = 1.796f - 1.9f;
+		posV5.z = -60.0f;
+		rotV5 = 0.0f;
+		/*************V6****************/
+		posV6.x = 92.467f;
+		posV6.y = 1.796f - 1.9f;
+		posV6.z = -64.989f;
+		rotV6 = 0.0f;
+
+		estadoVentana = 0;
+		animacionVentana = false;
+		animacionV3 = false;
+	}
 	
 
 	/******************************************************************/
