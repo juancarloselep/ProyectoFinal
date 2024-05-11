@@ -766,7 +766,7 @@ int main() {
 
 		/*************************SONIDO************************************/
 
-		//bool sonar = PlaySound("WDsong.wav", NULL, SND_SYNC);
+		PlaySound(TEXT("WDsong.wav"), NULL, SND_FILENAME | SND_ASYNC);
 
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Personaje Animacion
