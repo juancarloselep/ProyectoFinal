@@ -157,6 +157,7 @@ movAuto_z = 0.0f,
 orienta = 90.0f;
 bool	animacion = false,
 		animacionVentana = false,
+		animacionV3 = false,
 recorrido1 = true,
 recorrido2 = false,
 recorrido3 = false,
@@ -178,7 +179,7 @@ float	incRot = 0.0f,
 		rotV1 = 0.0f;
 glm::vec3 posV1(92.467f, 1.773f - 1.9f, -45.01f);
 glm::vec3 posV2(92.467f, 1.796f - 1.9f, -48.1f);
-glm::vec3 posV3(92.467f, 6.0f - 1.9f, -52.5f);
+glm::vec3 posV3(92.467f, 8.257f - 1.9f, -60.0f);
 glm::vec3 posV4(92.467f, 1.796f - 1.9f, -54.0f);
 glm::vec3 posV5(92.467f, 1.796f - 1.9f, -60.0f);
 glm::vec3 posV6(92.467f, 1.796f - 1.9f, -64.989f);
@@ -364,7 +365,7 @@ void animate(void)
 	//float anguloAux = angleRadians * 180.0 / 3.1416;
 
 	double anguloAux2 = std::atan2(magnitude (vectorA) * magnitude (vectorB) * std::sin(anguloAux), dotProduct (vectorA, vectorB));
-	//std::cout << "angulo = " << anguloPistola << std::endl;
+	std::cout << "angulo = " << anguloPistola << std::endl;
 	
 	anguloPistola = anguloAux2 * 180.0 / 3.1416;
 
@@ -416,7 +417,13 @@ void animate(void)
 				estadoVentana = 5;
 		}
 	}
-
+	if (animacionV3)
+	{	
+		rotV3 += 0.2f;
+		if (rotV3 >= 22.0f)
+			animacionV3 = false;
+		
+	}
 }
 
 void getResolution() {
@@ -1094,7 +1101,7 @@ int main() {
 		Ventana2.Draw(staticShader);
 
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV3.x, posV3.y, posV3.z));
-		modelOp = glm::rotate(modelOp, glm::radians(rotV3), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelOp = glm::rotate(modelOp, glm::radians(rotV3), glm::vec3(1.0f, 0.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana3.Draw(staticShader);
 
@@ -1192,7 +1199,10 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 
 	/*******************ANIMACION VENTANA*****************************/
 	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+	{
 		animacionVentana ^= true;
+		animacionV3 ^= true;
+	}
 	/*************RESET VENTANA*********************/
 	
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
@@ -1209,8 +1219,8 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		rotV2 = 0.0f;
 		/*************V3****************/
 		posV3.x = 92.467f;
-		posV3.y = 6.0f - 1.9f;
-		posV3.z = -52.5f;
+		posV3.y = 8.257f - 1.9f;
+		posV3.z = -60.0f;
 		rotV3 = 0.0f;
 		/*************V4****************/
 		posV4.x = 92.467f;
@@ -1230,6 +1240,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 
 		estadoVentana = 0;
 		animacionVentana = false;
+		animacionV3 = false;
 	}
 
 	
