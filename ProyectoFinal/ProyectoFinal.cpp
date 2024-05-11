@@ -853,8 +853,12 @@ int main() {
 
 		/*************************SONIDO************************************/
 
+		/*
 		PlaySound (TEXT("WDsong.wav"), NULL, SND_FILENAME | SND_ASYNC);
 
+		Sleep (5000);
+
+		*/
 		/*******************************************************************/
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Personaje Animacion
@@ -1280,6 +1284,11 @@ int main() {
 	//skybox.Terminate();
 	
 	glfwTerminate();
+
+	PlaySound(TEXT("WDsong.wav"), NULL, SND_FILENAME | SND_ASYNC);
+
+	Sleep(5000);
+
 	return 0;
 
 }
