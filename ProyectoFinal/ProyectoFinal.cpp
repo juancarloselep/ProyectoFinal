@@ -1314,7 +1314,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	
 	if (key == GLFW_KEY_R && action == GLFW_PRESS)
 	{
-		/*************V1****************/
+		/*************V1****************/        
 		posV1.x = 92.467f;
 		posV1.y = 1.773f - 1.9f;
 		posV1.z = -45.01f;
