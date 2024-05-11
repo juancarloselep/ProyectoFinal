@@ -364,7 +364,7 @@ void animate(void)
 	//float anguloAux = angleRadians * 180.0 / 3.1416;
 
 	double anguloAux2 = std::atan2(magnitude (vectorA) * magnitude (vectorB) * std::sin(anguloAux), dotProduct (vectorA, vectorB));
-	std::cout << "angulo = " << anguloPistola << std::endl;
+	//std::cout << "angulo = " << anguloPistola << std::endl;
 	
 	anguloPistola = anguloAux2 * 180.0 / 3.1416;
 
@@ -375,17 +375,46 @@ void animate(void)
 		{
 			posV1.y -= 0.1f;
 			rotV1 += 5.0f;
-			std::cout << "pos = " << posV1.y << std::endl;
-			std::cout << "giro = " << rotV1 << std::endl;
+			/*std::cout << "pos = " << posV1.y << std::endl;
+			std::cout << "giro = " << rotV1 << std::endl;*/
 			if (posV1.y <= -1.9f && rotV1 >= 90.0f)
 				//animacionVentana = false;//estadoVentana = 1;	
 				estadoVentana = 1;
 		}
 		if (estadoVentana == 1)
 		{
-				
+			posV2.y -= 0.1f;
+			rotV2 -= 5.0f;
+			if (posV2.y <= -1.9f && rotV2 <= -90.0f)
+				//animacionVentana = false;//estadoVentana = 1;	
+				estadoVentana = 2;
 		}
-
+		if (estadoVentana == 2)
+		{
+			posV4.y -= 0.1f;
+			rotV4 += 5.0f;
+			if (posV4.y <= -1.9f && rotV4 >= 90.0f)
+				//animacionVentana = false;//estadoVentana = 1;	
+				estadoVentana = 3;
+		}
+		if (estadoVentana == 3)
+		{
+			posV5.y -= 0.1f;
+			rotV5 -= 5.0f;
+			if (posV5.y <= -1.9f && rotV5 <= -90.0f)
+				//animacionVentana = false;//estadoVentana = 1;	
+				estadoVentana = 4;
+		}
+		if (estadoVentana == 4)
+		{
+			posV6.y -= 0.1f;
+			rotV6 += 5.0f;
+			/*std::cout << "pos = " << posV1.y << std::endl;
+			std::cout << "giro = " << rotV1 << std::endl;*/
+			if (posV6.y <= -1.9f && rotV6 >= 90.0f)
+				//animacionVentana = false;//estadoVentana = 1;	
+				estadoVentana = 5;
+		}
 	}
 
 }
@@ -1060,22 +1089,27 @@ int main() {
 		Ventana1.Draw(staticShader);
 
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV2.x, posV2.y, posV2.z));
+		modelOp = glm::rotate(modelOp, glm::radians(rotV2), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana2.Draw(staticShader);
 
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV3.x, posV3.y, posV3.z));
+		modelOp = glm::rotate(modelOp, glm::radians(rotV3), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana3.Draw(staticShader);
 
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV4.x, posV4.y, posV4.z));
+		modelOp = glm::rotate(modelOp, glm::radians(rotV4), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana4.Draw(staticShader);
 
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV5.x, posV5.y, posV5.z));
+		modelOp = glm::rotate(modelOp, glm::radians(rotV5), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana5.Draw(staticShader);
 
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV6.x, posV6.y, posV6.z));
+		modelOp = glm::rotate(modelOp, glm::radians(rotV6), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana6.Draw(staticShader);
 		//-------------------------------------------------------------------------------------
@@ -1168,6 +1202,33 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		posV1.y = 1.773f - 1.9f;
 		posV1.z = -45.01f;
 		rotV1 = 0.0f;
+		/*************V2****************/
+		posV2.x = 92.467f;
+		posV2.y = 1.796f - 1.9f;
+		posV2.z = -48.1f;
+		rotV2 = 0.0f;
+		/*************V3****************/
+		posV3.x = 92.467f;
+		posV3.y = 6.0f - 1.9f;
+		posV3.z = -52.5f;
+		rotV3 = 0.0f;
+		/*************V4****************/
+		posV4.x = 92.467f;
+		posV4.y = 1.796f - 1.9f;
+		posV4.z = -54.0f;
+		rotV4 = 0.0f;
+		/*************V5****************/
+		posV5.x = 92.467f;
+		posV5.y = 1.796f - 1.9f;
+		posV5.z = -60.0f;
+		rotV5 = 0.0f;
+		/*************V6****************/
+		posV6.x = 92.467f;
+		posV6.y = 1.796f - 1.9f;
+		posV6.z = -64.989f;
+		rotV6 = 0.0f;
+
+		estadoVentana = 0;
 		animacionVentana = false;
 	}
 
