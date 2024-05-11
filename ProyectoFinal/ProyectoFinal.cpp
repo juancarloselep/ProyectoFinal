@@ -1,10 +1,10 @@
-/*---------------------------------------------------------*/
-/* ----------------   Proyecto Final --------------------------*/
-/*-----------------    2024-2   ---------------------------*/
-/*------------- Alumnos: Juan Carlos Lázaro Pérez   --------*/
-/*--------------------- Jennifer Rodriguez Vargas----------*/
+/*----------------------------------------------------------*/
+/* ----------------   Proyecto Final -----------------------*/
+/*-----------------    2024-2    ---------------------------*/
+/*------------- Integrantes: Juan Carlos Lázaro Pérez   ----*/
+/*-------------			     Jennifer Rodriguez Vargas  ----*/
 /*------------- No. Cuenta: 314093587  ---------------------*/
-/*-----------				316164190 ---------------------*/
+/*-------------			    316164190  ---------------------*/
 
 #include <Windows.h>
 
@@ -679,6 +679,8 @@ int main() {
 	Model Ballesta("resources/objects/Ballesta/ballesta.obj");
 	Model Bate("resources/objects/Bate/bate.obj");
 	Model ZonaComida1("resources/objects/ZonaComida1/zonaComida1.obj");
+	Model ZonaComida2("resources/objects/ZonaComida2/zonaComida2.obj");
+	Model ZonaComida3("resources/objects/ZonaComida3/zonaComida3.obj");
 	Model Ventana1("resources/objects/Ventana/ventana1.obj");
 	Model Ventana2("resources/objects/Ventana/ventana2.obj");
 	Model Ventana3("resources/objects/Ventana/ventana3.obj");
@@ -1085,9 +1087,18 @@ int main() {
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		Bate.Draw(staticShader);
+
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		ZonaComida1.Draw(staticShader);
+
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		staticShader.setMat4("model", modelOp);
+		ZonaComida2.Draw(staticShader);
+
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, -1.9f, 0.0f));
+		staticShader.setMat4("model", modelOp);
+		ZonaComida3.Draw(staticShader);
 
 		/******************************VENTANA**************************************/
 		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posV1.x, posV1.y, posV1.z));
