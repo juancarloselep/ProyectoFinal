@@ -413,7 +413,7 @@ void animate(void)
 		if (estadoCarro == 0)
 		{
 			posChasis.z -= 0.9f;
-			if (posChasis.z <= 0.0f)
+			if (posChasis.z <= -10.0f)
 				estadoCarro = 1;
 		}
 		if (estadoCarro == 1)
@@ -422,65 +422,24 @@ void animate(void)
 			if (rotChasis <= -30.0f)
 				estadoCarro = 2;
 		}
+		if (estadoCarro == 2)
+		{
+			posChasis.z -= 0.5f;
+			posChasis.x += 0.5f;
+			if (posChasis.x >= 0.0f && posChasis.z <= -40.0f)
+				estadoCarro = 3;
+		}
+		if (estadoCarro == 3)
+		{
+			rotCofre += 0.3f;
+			rotPuertaDer += 0.3f;
+			rotPuertaIzq -= 0.3f;
+			if (rotCofre >= 90.0f && rotPuertaDer >= 90.0f && rotPuertaIzq <= -90.0f)
+				animacionAuto = false;
+		}
 		
 	}
-	/*if (estado_carro == 0)
-	{
-		movAuto_z += 0.5f;
-		orienta = 180.0f;
-		if (movAuto_z >= 100.0f)
-		{
-			estado_carro = 1;
-		}
-	}
-	if (estado_carro == 1)
-	{
-		movAuto_x += 0.5f;
-		orienta = -90.0f;
-		if (movAuto_x >= 50.0f)
-		{
-			estado_carro = 2;
-		}
-	}
-	if (estado_carro == 2)
-	{
-		movAuto_z -= 0.5f;
-		orienta = 0.0f;
-		if (movAuto_z <= 28.0f)
-		{
-			estado_carro = 3;
-		}
-	}
-	if (estado_carro == 3)
-	{
-		movAuto_x -= 0.5f;
-		orienta = 90.0f;
-		if (movAuto_x <= 40.0f)
-		{
-			estado_carro = 4;
-			//animacion = false;
-		}
-	}
-	if (estado_carro == 4)
-	{
-		movAuto_x -= 0.3f;
-		orienta = 90.0f;
-		if (movAuto_x <= 40.0f)//40
-		{
-			//estado_carro = 5;
-			orienta_llanta = 45.0f;
-			animacion = false;
-		}
-	}*/
-	/*if (estado_carro == 5)
-	{
-		movAuto_x -= 0.1f;
-		orienta_llanta = 45.0f;
-		if (movAuto_x >= 0.0f)
-		{
-			animacion = false;
-		}
-	}*/
+	
 }
 
 void getResolution() {
@@ -959,66 +918,21 @@ int main() {
 		Chasis.Draw(staticShader);
 
 		modelOp = glm::translate(tmp, glm::vec3(2.82f, 3.3f, -2.398f));
-		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelOp = glm::rotate(modelOp, glm::radians(rotPuertaDer), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		puertader.Draw(staticShader);
 
 		modelOp = glm::translate(tmp, glm::vec3(-2.68f, 3.3f, -2.398f));
-		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelOp = glm::rotate(modelOp, glm::radians(rotPuertaIzq), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		puertaizq.Draw(staticShader);
 
 		modelOp = glm::translate(tmp, glm::vec3(0.02f, 3.6f, -2.998f));
-		//modelOp = glm::rotate(modelOp, glm::radians(), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelOp = glm::rotate(modelOp, glm::radians(rotCofre), glm::vec3(1.0f, 0.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		cofre.Draw(staticShader);
 
-		/*model = glm::rotate(glm::mat4(1.0f), glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f + movAuto_x, -1.9f + movAuto_y, movAuto_z));//hace que el vehiculo se mueva (rote) con respecto a Y
-		tmp2 = model = glm::rotate(model, glm::radians(orienta), glm::vec3(0.0f, 1.0f, 0.0f));
-		//para realizar el moviemiento al subir nos ubicamos al eje X, tomando como referencia el dibujo proprocionado nos movemos en -X
-		tmp2 = model = glm::rotate(model, glm::radians(orienta_llanta), glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		Chasis.Draw(staticShader);
-		//// llanta Izq delantera
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));//0.0f + movAuto_x, -1.9f + movAuto_y, movAuto_z
-		//tmp = model = glm::rotate(model, glm::radians(orienta_llanta), glm::vec3(0.0f, 1.0f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		llantaizq.Draw(staticShader);
-		//// llanta der delantera
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));
-		//tmp  = glm::rotate(model, glm::radians(orienta_llanta), glm::vec3(0.0f, 1.0f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		llantader.Draw(staticShader);
-		//// llanta tras Izq delantera
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		llantatrasizq.Draw(staticShader);
-		//// llanta tras der delantera
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		llantatrasder.Draw(staticShader);
-		//// cofre
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		cofre.Draw(staticShader);
-		//// Puerta izq
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		puertaizq.Draw(staticShader);
-		//// Puerta der
-		modelOp = glm::translate(tmp2, glm::vec3(0.0f, -1.9f, 0.0f));
-		modelOp = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-		staticShader.setMat4("model", model);
-		puertader.Draw(staticShader);
-		*/
+		
 		// -------------------------------------------------------------------------------------------------------------------------
 		// ESCENARIO CENTRO COMERCIAL
 		// -------------------------------------------------------------------------------------------------------------------------
@@ -1410,6 +1324,7 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		posChasis.y = -1.9f;
 		posChasis.z = 82.598f;
 		rotCofre = 0.0f;
+		rotChasis = 0.0f;
 		rotPuertaDer = 0.0f;
 		rotPuertaIzq = 0.0f;
 		estadoCarro = 0;
