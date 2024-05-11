@@ -143,7 +143,7 @@ float	magnitud1 = 0.0f,
 /*************VARIABLES PARA VENTANA*****************/
 
 int estadoVentana = 0,
-	estado_carro = 0;
+	estadoCarro = 0;
 float	incRot = 0.0f,
 		rotV6 = 0.0f,
 		rotV5 = 0.0f,
@@ -157,7 +157,16 @@ glm::vec3 posV3(92.467f, 8.257f - 1.9f, -60.0f);
 glm::vec3 posV4(92.467f, 1.796f - 1.9f, -54.0f);
 glm::vec3 posV5(92.467f, 1.796f - 1.9f, -60.0f);
 glm::vec3 posV6(92.467f, 1.796f - 1.9f, -64.989f);
+/*************VARIABLES PARA AUTO*****************/
 
+glm::vec3 posChasis(-20.42f, -1.9f, 82.598f);
+float	rotCofre = 0.0f,
+		rotPuertaIzq = 0.0f,
+		posChasisX = -20.42f,
+		posChasisY = -1.9f,
+		posChasisZ = 82.598f,
+		rotChasis = 0.0f,
+		rotPuertaDer = 0.0f;
 
 /*************************************************************/
 //Keyframes (Manipulación y dibujo)
@@ -400,7 +409,20 @@ void animate(void)
 
 	if (animacionAuto)
 	{
-
+		
+		if (estadoCarro == 0)
+		{
+			posChasis.z -= 0.9f;
+			if (posChasis.z <= 0.0f)
+				estadoCarro = 1;
+		}
+		if (estadoCarro == 1)
+		{
+			rotChasis -= 0.5f;
+			if (rotChasis <= -30.0f)
+				estadoCarro = 2;
+		}
+		
 	}
 	/*if (estado_carro == 0)
 	{
@@ -931,8 +953,8 @@ int main() {
 		// -------------------------------------------------------------------------------------------------------------------------
 		
 
-		tmp = modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-20.42f, -1.9f, 82.598f));
-		
+		 modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(posChasis.x, posChasis.y, posChasis.z));
+		 tmp = modelOp = glm::rotate(modelOp, glm::radians(rotChasis), glm::vec3(0.0f, 1.0f, 0.0f));
 		staticShader.setMat4("model", modelOp);
 		Chasis.Draw(staticShader);
 
@@ -1380,44 +1402,18 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 	}
 	
 
-	/*************RESET VENTANA*********************/
+	/*************RESET AUTO*********************/
 
 	if (key == GLFW_KEY_L && action == GLFW_PRESS)
 	{
-		/*************V1****************/
-		posV1.x = 92.467f;
-		posV1.y = 1.773f - 1.9f;
-		posV1.z = -45.01f;
-		rotV1 = 0.0f;
-		/*************V2****************/
-		posV2.x = 92.467f;
-		posV2.y = 1.796f - 1.9f;
-		posV2.z = -48.1f;
-		rotV2 = 0.0f;
-		/*************V3****************/
-		posV3.x = 92.467f;
-		posV3.y = 8.257f - 1.9f;
-		posV3.z = -60.0f;
-		rotV3 = 0.0f;
-		/*************V4****************/
-		posV4.x = 92.467f;
-		posV4.y = 1.796f - 1.9f;
-		posV4.z = -54.0f;
-		rotV4 = 0.0f;
-		/*************V5****************/
-		posV5.x = 92.467f;
-		posV5.y = 1.796f - 1.9f;
-		posV5.z = -60.0f;
-		rotV5 = 0.0f;
-		/*************V6****************/
-		posV6.x = 92.467f;
-		posV6.y = 1.796f - 1.9f;
-		posV6.z = -64.989f;
-		rotV6 = 0.0f;
-
-		estadoVentana = 0;
-		animacionVentana = false;
-		animacionV3 = false;
+		posChasis.x = -20.42f;
+		posChasis.y = -1.9f;
+		posChasis.z = 82.598f;
+		rotCofre = 0.0f;
+		rotPuertaDer = 0.0f;
+		rotPuertaIzq = 0.0f;
+		estadoCarro = 0;
+		animacionAuto = false;
 	}
 	
 
