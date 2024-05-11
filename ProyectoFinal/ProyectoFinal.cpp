@@ -32,27 +32,8 @@
 #include <iostream>
 #include <cmath>
 
+#include <windows.h>
 
-/*
-struct Vector3D {
-	double x, y, z;
-};
-
-double dotProduct(const Vector3D& a, const Vector3D& b) {
-	return a.x * b.x + a.y * b.y + a.z * b.z;
-}
-
-double magnitude(const Vector3D& v) {
-	return std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-}
-
-double angleBetweenVectors(const Vector3D& a, const Vector3D& b) {
-	double dot = dotProduct(a, b);
-	double magA = magnitude(a);
-	double magB = magnitude(b);
-	return std::acos(dot / (magA * magB));
-}
-*/
 
 
 struct Vector3D {
@@ -66,13 +47,6 @@ double dotProduct(const Vector3D& a, const Vector3D& b) {
 double magnitude(const Vector3D& v) {
 	return std::sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
-/*
-Vector3D productoCruz(const Vector3D& a, const Vector3D& b) {
-	return Vector3D (a.y * b.z - a.z * b.y,
-					a.z * b.x - a.x * b.z,
-					a.x * b.y - a.y * b.x);
-}
-*/
 
 
 double angleBetweenVectors(const Vector3D& a, const Vector3D& b) {
@@ -155,13 +129,8 @@ glm::vec3 ambientColor = diffuseColor * glm::vec3(0.8f);
 float	movAuto_x = 0.0f,
 movAuto_z = 0.0f,
 orienta = 90.0f;
-bool	animacion = false,
-		animacionVentana = false,
-		animacionV3 = false,
-recorrido1 = true,
-recorrido2 = false,
-recorrido3 = false,
-recorrido4 = false;
+bool	animacionVentana = false,
+		animacionV3 = false;
 /*VARIABLES PISTOLA*/
 glm::vec3 posicionInicial = glm::vec3(0.0f, 0.0f, -1.0f);
 float	magnitud1 = 0.0f,
@@ -183,8 +152,6 @@ glm::vec3 posV3(92.467f, 8.257f - 1.9f, -60.0f);
 glm::vec3 posV4(92.467f, 1.796f - 1.9f, -54.0f);
 glm::vec3 posV5(92.467f, 1.796f - 1.9f, -60.0f);
 glm::vec3 posV6(92.467f, 1.796f - 1.9f, -64.989f);
-
-glm::vec3 RotVentana1(0.0f, -1.9f, 0.0f);
 
 
 /*************************************************************/
@@ -563,7 +530,7 @@ int main() {
 	monitors = glfwGetPrimaryMonitor();
 	getResolution();
 
-	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Pratica 7 2024-2", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "PROYECTO FINAL", NULL, NULL);
 	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
 		glfwTerminate();
@@ -797,6 +764,9 @@ int main() {
 		myShader.setMat4("projection", projectionOp);
 		/**********/
 
+		/*************************SONIDO************************************/
+
+		//bool sonar = PlaySound("WDsong.wav", NULL, SND_SYNC);
 
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Personaje Animacion
