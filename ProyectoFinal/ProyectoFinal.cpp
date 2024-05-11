@@ -790,8 +790,9 @@ int main() {
 		// -------------------------------------------------------------------------------------------------------------------------
 		// Segundo Personaje Animacion
 		// -------------------------------------------------------------------------------------------------------------------------
-		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, -2.0f, 15.0f));
-		modelOp = glm::scale(modelOp, glm::vec3(0.0001f));
+		modelOp = glm::translate(glm::mat4(1.0f), glm::vec3(79.347f, -1.9f, -18.02f));
+		modelOp = glm::rotate(modelOp, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelOp = glm::scale(modelOp, glm::vec3(0.04f));
 		animShader.setMat4("model", modelOp);
 		zombieArrastre.Draw(animShader);
 
