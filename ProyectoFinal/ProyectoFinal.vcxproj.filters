@@ -28,6 +28,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Media Include="..\..\..\..\Downloads\The Walking Dead EXTENDIDA.mp3" />
+    <Media Include="..\..\..\..\Downloads\Pista.wav">
+      <Filter>Archivos de recursos</Filter>
+    </Media>
   </ItemGroup>
 </Project>

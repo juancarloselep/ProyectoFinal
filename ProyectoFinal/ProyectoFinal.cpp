@@ -31,6 +31,7 @@
 #include <math.h>
 #include <iostream>
 #include <cmath>
+#include <thread>
 
 #include <windows.h>
 
@@ -278,7 +279,7 @@ void LoadTextures()
 
 
 
-void animate(void) 
+void animate(void)
 {
 	if (play)
 	{
@@ -322,27 +323,27 @@ void animate(void)
 	double angleRadians = angleBetweenVectors(vectorA, vectorB);
 	anguloPistola = angleRadians * 180.0 / 3.1416;
 	std::cout << "angulo = " << anguloPistola << std::endl;*/
-	
+
 	Vector3D vectorA = { 0.0f, 0.0f, -1.0f };
 	Vector3D vectorB = { camera.Front.x, camera.Front.y, camera.Front.z };
-	Vector3D vectorC = {vectorA.y * vectorB.z - vectorA.z * vectorB.y,
+	Vector3D vectorC = { vectorA.y * vectorB.z - vectorA.z * vectorB.y,
 						vectorA.z * vectorA.x - vectorA.x * vectorB.z,
 						vectorA.x * vectorB.y - vectorA.y * vectorB.x };
 
 
-	
+
 	double anguloAux = angleBetweenVectors(vectorA, vectorB);
 	//anguloPistola = angleRadians * 180.0 / 3.1416;
 	//float anguloAux = angleRadians * 180.0 / 3.1416;
 
-	double anguloAux2 = std::atan2(magnitude (vectorA) * magnitude (vectorB) * std::sin(anguloAux), dotProduct (vectorA, vectorB));
+	double anguloAux2 = std::atan2(magnitude(vectorA) * magnitude(vectorB) * std::sin(anguloAux), dotProduct(vectorA, vectorB));
 	std::cout << "angulo = " << anguloPistola << std::endl;
-	
+
 	anguloPistola = anguloAux2 * 180.0 / 3.1416;
 
 	/******************ANIMACION VENTANA********************/
 	if (animacionVentana)
-	{	
+	{
 		if (estadoVentana == 0)
 		{
 			posV1.y -= 0.1f;
@@ -389,12 +390,13 @@ void animate(void)
 		}
 	}
 	if (animacionV3)
-	{	
+	{
 		rotV3 += 0.2f;
 		if (rotV3 >= 22.0f)
 			animacionV3 = false;
-		
+
 	}
+
 	// ******** ANIMACION AUTO **************
 	if (estado_carro == 0)
 	{
@@ -439,9 +441,9 @@ void animate(void)
 		orienta = 90.0f;
 		if (movAuto_x <= 40.0f)//40
 		{
-			//estado_carro = 5;
-			orienta_llanta = 45.0f;
-			animacion = false;
+			estado_carro = 0;
+			//orienta_llanta = 45.0f;
+			//animacion = false;
 		}
 	}
 	/*if (estado_carro == 5)
@@ -453,6 +455,7 @@ void animate(void)
 			animacion = false;
 		}
 	}*/
+	
 }
 
 void getResolution() {
@@ -584,6 +587,11 @@ void myData() {
 	glBindVertexArray(0);
 }
 
+void reproducirMusica() {
+	// Reproduce un archivo de sonido llamado "mimusica.wav" de manera asincrónica
+	PlaySound(TEXT("Pista.wav"), NULL, SND_FILENAME | SND_ASYNC);
+	}
+
 int main() {
 	// glfw: initialize and configure
 	glfwInit();
@@ -592,6 +600,7 @@ int main() {
 	monitors = glfwGetPrimaryMonitor();
 	getResolution();
 
+	
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "PROYECTO FINAL", NULL, NULL);
 	if (window == NULL) {
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -1222,6 +1231,7 @@ int main() {
 		modelOp = glm::rotate(modelOp, glm::radians(rotV6), glm::vec3(0.0f, 0.0f, 1.0f));
 		staticShader.setMat4("model", modelOp);
 		Ventana6.Draw(staticShader);
+
 		//-------------------------------------------------------------------------------------
 		// draw skybox as last
 		// -------------------
@@ -1235,19 +1245,41 @@ int main() {
 			SDL_Delay((int)(LOOP_TIME - deltaTime));
 		}
 
+		// Reproduce un archivo de sonido llamado "mimusica.wav"
+		//PlaySound(TEXT("Pista.wav"), NULL, SND_FILENAME | SND_ASYNC);
+		// Espera a que se reproduzca el sonido antes de salir del programa
+		//Sleep(10000); // Espera tiempo segundos **Mientras mas corto, se muestra la imagen
+		//return 0; Si le pongo esto, en cuanto termina de dormir se sale de la ventana
+		
+		// Iniciar un hilo para reproducir música
+		std::thread musicThread(reproducirMusica);
+
+		// Esperar un tiempo suficiente para que la música se reproduzca (en milisegundos)
+		std::this_thread::sleep_for(std::chrono::milliseconds(5000)); // Espera 5 segundos
+		// Continuar con el código principal del programa
+		std::cout << "El programa ha terminado." << std::endl;
+		// Esperar a que el hilo de música termine antes de salir del programa
+		musicThread.join();
+
+		//return 0;
 		
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		
 	}
+	
+
 	// glfw: terminate, clearing all previously allocated GLFW resources.
 	// ------------------------------------------------------------------
 	glDeleteVertexArrays(2, VAO);
 	glDeleteBuffers(2, VBO);
 	//skybox.Terminate();
+	
 	glfwTerminate();
 	return 0;
+
 }
 
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
