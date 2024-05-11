@@ -758,6 +758,8 @@ int main() {
 	glm::mat4 viewOp = glm::mat4(1.0f);		//Use this matrix for ALL models
 	glm::mat4 projectionOp = glm::mat4(1.0f);	//This matrix is for Projection
 
+
+
 	// render loop
 	// -----------
 	while (!glfwWindowShouldClose(window))
