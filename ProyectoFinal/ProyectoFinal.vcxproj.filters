@@ -27,4 +27,7 @@
       <Filter>Archivos de origen</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\Downloads\The Walking Dead EXTENDIDA.mp3" />
+  </ItemGroup>
 </Project>

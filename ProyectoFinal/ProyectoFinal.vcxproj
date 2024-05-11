@@ -139,6 +139,9 @@
   <ItemGroup>
     <ClInclude Include="include\camera.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="..\..\..\..\Downloads\The Walking Dead EXTENDIDA.mp3" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

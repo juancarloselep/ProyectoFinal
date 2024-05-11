@@ -1299,9 +1299,9 @@ void my_input(GLFWwindow* window, int key, int scancode, int action, int mode)
 		rotCuboY += 8.0f;
 	
 	//Car animation
-	if (key == GLFW_KEY_SPACE && action == GLFW_PRESS)
+	if (key == GLFW_KEY_5 && action == GLFW_PRESS)
 		animacion ^= true;
-	if (key == GLFW_KEY_0 && action == GLFW_PRESS)
+	if (key == GLFW_KEY_6 && action == GLFW_PRESS)
 		movAuto_x = 0.0f;//que vuelva a su posicion original
 
 	/*******************ANIMACION VENTANA*****************************/
